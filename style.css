@@ -1,0 +1,37 @@
+.calculator{
+	width: 300px;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-row-gap:5px;
+	text-align: center;
+	flex-direction: column;
+	margin: 0 auto;
+}
+
+.input-calc{
+	padding: 5px;
+}
+
+.calculator-title{
+	margin: 0;
+}
+
+.action-buttons{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.action-btn{
+	background-color: #d4d0cf;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius:3px;
+}
+
+.get-res-btn{
+	background-color: #d4d0cf;
+	border-radius: 5px;
+	padding: 5px;
+	cursor:pointer;
+}
