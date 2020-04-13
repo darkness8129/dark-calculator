@@ -1,18 +1,6 @@
-let Button = React.createClass({
-	getInitialState: function(){
-		return {
-			action: ""
-		}
-	},
-
-	//function that update state action and transmits the action to the main component
-	updateAction: function(){
-		this.state.action = this.props.action;
-		this.props.setAction(this.state.action);
-	},
-
+let ActionButton = React.createClass({
 	render: function(){
-		return <a className = "action-btn" onClick = {this.updateAction}>{this.props.action}</a>;
+		return <button className = "action-btn" onClick = {() => this.props.setAction(this.props.action)}>{this.props.action}</button>;
 	}
 });
 
@@ -20,7 +8,8 @@ let Calculator = React.createClass({
 
 	getInitialState: function(){
 		return {
-			result: 0
+			result: "",
+			colorResult: "#65f76f"
 		};
 	},
 
@@ -43,41 +32,50 @@ let Calculator = React.createClass({
 	calcFunc: function(){
 		let a = +this.firstNumber,
 			b = +this.secondNumber,
-			result = this.state.result;
+			color = this.state.colorResult,
+			result = 0;
 
-		switch (this.action){
-			case "+":
-				result = a + b;
-				break;
-			case "-":
-				result = a - b;
-				break;
-			case "*":
-				result = a * b;
-				break;
-			case "/":
-				result = a / b;
-				break; 
+		if (isNaN(a) || isNaN(b)){
+			result = "Error: you entered no numbers";
+			color = "#ff795e";
+		} else{
+			switch (this.action){
+				case "+":
+					result = a + b;
+					break;
+				case "-":
+					result = a - b;
+					break;
+				case "×":
+					result = a * b;
+					break;
+				case "/":
+					result = a / b;
+					break; 
+			}
+			color = "#65f76f";
 		}
 
 		this.setState({
-			result: result
+			result: result,
+			colorResult: color
 		});
 	},
 
 	render: function(){
+		let styleResult = {color: this.state.colorResult};
 		return <div className = "calculator">
-					<h2 className = "calculator-title">Enter your numbers here:</h2>
-					<input className = "input-calc" type ="text" placeholder = "Enter first number..." onChange = {this.setFirstNumber}/>
-					<input className = "input-calc" type ="text" placeholder = "Enter second number..." onChange = {this.setSecondNumber}/>
+					<h2 className = "calculator-title">Calculator</h2>
+					<input className = "input-calc" type ="text" placeholder = "First number..." onChange = {this.setFirstNumber}/>
+					<input className = "input-calc" type ="text" placeholder = "Second number..." onChange = {this.setSecondNumber}/>
 					<div className = "action-buttons">
-						<Button action = "+" setAction={this.setAction} />
-						<Button action = "-" setAction={this.setAction} />
-						<Button action = "*" setAction={this.setAction} />
-						<Button action = "/" setAction={this.setAction} />
+						<ActionButton action = "+" setAction={this.setAction} />
+						<ActionButton action = "-" setAction={this.setAction} />
+						<ActionButton action = "×" setAction={this.setAction} />
+						<ActionButton action = "/" setAction={this.setAction} />
 					</div>
-					<a className = "get-res-btn" onClick = {this.calcFunc}> Get result </a>
-					<div className = "result" >Your result: {this.state.result}</div>
+					<button className = "get-res-btn" onClick = {this.calcFunc}> Get result </button>
+					<div className = "result" >Result: <span style = {styleResult}>{this.state.result}</span></div>
 					
 
 				</div>;
