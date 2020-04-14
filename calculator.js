@@ -1,12 +1,11 @@
 let ActionButton = React.createClass({
-	render: function(){
+	render(){
 		return <button className = "action-btn" onClick = {() => this.props.setAction(this.props.action)}>{this.props.action}</button>;
 	}
 });
 
 let Calculator = React.createClass({
-
-	getInitialState: function(){
+	getInitialState(){
 		return {
 			result: "",
 			colorResult: "#65f76f"
@@ -14,30 +13,33 @@ let Calculator = React.createClass({
 	},
 
 	//function that define first number
-	setFirstNumber: function(event){
+	setFirstNumber(event){
 		this.firstNumber = event.target.value;
 	},
 
 	//function that define second number
-	setSecondNumber: function(event){
+	setSecondNumber(event){
 		this.secondNumber = event.target.value;
 	},
 
 	//function to get action
-	setAction: function(value) {
+	setAction(value) {
    		this.action = value;
 	},
 
 	//function that performs arithmetic
-	calcFunc: function(){
+	calcFunc(){
 		let a = +this.firstNumber,
 			b = +this.secondNumber,
-			color = this.state.colorResult,
+			{colorResult} = this.state,
 			result = 0;
 
 		if (isNaN(a) || isNaN(b)){
-			result = "Error: you entered no numbers";
-			color = "#ff795e";
+			result = "Error: you entered no numbers.";
+			colorResult = "#ff795e";
+		} else if (b === 0){
+			result = "Error: division by zero.";
+			colorResult = "#ff795e";
 		} else{
 			switch (this.action){
 				case "+":
@@ -53,16 +55,14 @@ let Calculator = React.createClass({
 					result = a / b;
 					break; 
 			}
-			color = "#65f76f";
+		 
+			colorResult = "#65f76f";
 		}
 
-		this.setState({
-			result: result,
-			colorResult: color
-		});
+		this.setState({result, colorResult});	
 	},
 
-	render: function(){
+	render(){
 		let styleResult = {color: this.state.colorResult};
 		return <div className = "calculator">
 					<h2 className = "calculator-title">Calculator</h2>
@@ -76,14 +76,8 @@ let Calculator = React.createClass({
 					</div>
 					<button className = "get-res-btn" onClick = {this.calcFunc}> Get result </button>
 					<div className = "result" >Result: <span style = {styleResult}>{this.state.result}</span></div>
-					
-
 				</div>;
 	}
-
 });
 
-ReactDOM.render(
-	<Calculator/>,
-	document.getElementById('content')
-	);
+ReactDOM.render(<Calculator/>, document.getElementById('content'));
