@@ -1,0 +1,126 @@
+/*General styles*/
+
+body {
+    font-size: 16px;
+}
+
+::selection {
+    background: orange;
+    color: white;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*Title*/
+
+.title {
+    font-family: monospace;
+    font-style: italic;
+    color: gray;
+}
+
+/*Wrapper*/
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 10px;
+}
+
+/*Main styles*/
+
+.calculator {
+    max-width: 300px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: black;
+}
+
+/*Panels*/
+
+.output, .input {
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 20px;
+    color: white;
+}
+
+.output {
+    padding: 10px;
+}
+
+.input {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    row-gap: 10px;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#action, #result {
+    display: block;
+    text-align: right;
+}
+
+#result {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+/*Buttons*/
+
+.number-btn, .action-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .1s all linear;
+}
+
+.number-btn {
+    background-color: gray;
+}
+
+.number-btn:nth-child(15) {
+    grid-column: 1/3;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.number-btn:active {
+    background-color: #666564;
+}
+
+.action-btn {
+    background-color: orange;
+}
+
+.action-btn:first-child {
+    width: 100%;
+    grid-column: 1/4;
+    border-radius: 20px;
+    background-color: lightgray;
+    color: black;
+}
+
+.action-btn:first-child:active {
+    background-color: #666564;
+}
+
+.action-btn:active {
+    background-color: #cf6a06;
+}
