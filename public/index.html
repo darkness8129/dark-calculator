@@ -13,30 +13,33 @@
         <h1 class="title">Calculator</h1>
         <div class="calculator">
             <div class="output">
-                <span id="action">20*</span>
-                <span id="result">1923</span>
+                <span id="action"></span>
+                <span id="result"></span>
             </div>
             <div class="input">
-                <span class="action-btn">C</span>
-                <span class="action-btn">/</span>
-                <span class="number-btn">7</span>
-                <span class="number-btn">8</span>
-                <span class="number-btn">9</span>
-                <span class="action-btn">*</span>
-                <span class="number-btn">4</span>
-                <span class="number-btn">5</span>
-                <span class="number-btn">6</span>
-                <span class="action-btn">-</span>
-                <span class="number-btn">1</span>
-                <span class="number-btn">2</span>
-                <span class="number-btn">3</span>
-                <span class="action-btn">+</span>
-                <span class="number-btn">0</span>
-                <span class="number-btn">.</span>
-                <span class="action-btn">=</span>
+                <span class="action-btn" data-action="clear">C</span>
+                <span class="action-btn" data-action="/">/</span>
+                <span class="number-btn" data-number="7">7</span>
+                <span class="number-btn" data-number="8">8</span>
+                <span class="number-btn" data-number="9">9</span>
+                <span class="action-btn" data-action="*">*</span>
+                <span class="number-btn" data-number="4">4</span>
+                <span class="number-btn" data-number="5">5</span>
+                <span class="number-btn" data-number="6">6</span>
+                <span class="action-btn" data-action="-">-</span>
+                <span class="number-btn" data-number="1">1</span>
+                <span class="number-btn" data-number="2">2</span>
+                <span class="number-btn" data-number="3">3</span>
+                <span class="action-btn" data-action="+">+</span>
+                <span class="number-btn" data-number="0">0</span>
+                <span class="number-btn" data-number=".">.</span>
+                <span class="action-btn" data-action="calculate">=</span>
             </div>
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../src/calculator.js"></script>
 </body>
 
 </html>

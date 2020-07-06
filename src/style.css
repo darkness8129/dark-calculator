@@ -55,6 +55,7 @@ body {
 }
 
 .output {
+    height: 75px;
     padding: 10px;
 }
 
