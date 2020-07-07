@@ -60,6 +60,7 @@ body {
     justify-content: space-between;
     height: 75px;
     padding: 10px;
+    overflow: hidden;
 }
 
 .input {
@@ -78,7 +79,7 @@ body {
 }
 
 #result {
-    font-size: 26px;
+    font-size: 24px;
 }
 
 /*Buttons*/
