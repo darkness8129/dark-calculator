@@ -4,59 +4,66 @@ $(document).ready(function () {
         action = '',
         result = 0;
 
-    $('.action-btn').on('click', function () {
+    // after loading show 0 as a result
+    $('#result').text(result);
 
+    $('.action-btn').on('click', function () {
         switch ($(this).attr('data-action')) {
-            //when clear
             case 'clear':
-                //очищаємо усе
-                result = '';
+                // clear all variables
+                result = 0;
                 firstNum = '';
                 secondNum = '';
                 action = '';
-                $('#result').text('');
+                $('#result').text(result);
                 $('#action').text('');
                 break;
-            //when = 
             case 'calculate':
-                result = calculate(+firstNum, +secondNum, action);
-                // шоб перше число стало результатом
-                firstNum = result;
-                secondNum = '';
-                $('#result').text(result);
-                console.log($('action').text())
-                if (!$('#action').text().includes('=')) {
-                    //додає = в кінець після підрахунку
-                    $('#action').append('=');
+                // we can calculate only when the second number is entered
+                if (secondNum) {
+                    result = calculate(+firstNum, +secondNum, action);
+
+                    // after receiving the result, it becomes the first number
+                    firstNum = result;
+
+                    secondNum = '';
+                    $('#result').text(result);
+
+                    // we can add only one '='
+                    if (!$('#action').text().includes('=')) {
+                        $('#action').append('=');
+                    }
                 }
                 break;
             default:
-                action = $(this).attr('data-action');
-                //шоб було число + число = ... а не число = при обраххуванні результату
-                $('#action').text(`${firstNum}${action}`);
+                // we can write an action only if the first number is entered
+                if (firstNum) {
+                    action = $(this).attr('data-action');
+                    $('#action').text(`${firstNum}${action}`);
+                }
+
         }
     })
 
     $('.number-btn').on('click', function () {
         let number = $(this).attr('data-number');
 
+        // if the action is entered, then write the first number, if not - the second
         if (!action) {
             firstNum += number;
             $('#action').append(number);
-            //шоб не можна було писати число після =
+            // check so that you can't write a number after '='
         } else if (!$('#action').text().includes('=')) {
             secondNum += number;
             $('#action').append(number);
         }
+
     })
 
-
-
-
-
-
+    // func for calculating 
     function calculate(firstNum, secondNum, action) {
         let result;
+
         switch (action) {
             case '+':
                 result = firstNum + secondNum;
@@ -72,7 +79,7 @@ $(document).ready(function () {
                 break;
         }
 
-        return result;
+        // fixes problem of calculation of floating point numbers 
+        return parseFloat(result.toPrecision(15));
     }
-
 });
