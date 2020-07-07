@@ -43,6 +43,7 @@ body {
     padding: 20px;
     border-radius: 20px;
     background-color: black;
+    box-shadow: 5px 5px 10px gray;
 }
 
 /*Panels*/
@@ -93,6 +94,10 @@ body {
     border-radius: 50%;
     cursor: pointer;
     transition: .1s all linear;
+}
+
+.number-btn:hover, .action-btn:hover {
+    opacity: .9;
 }
 
 .number-btn {
