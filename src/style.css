@@ -94,6 +94,7 @@ body {
     border-radius: 50%;
     cursor: pointer;
     transition: .1s all linear;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .number-btn:hover, .action-btn:hover {
