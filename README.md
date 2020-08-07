@@ -11,3 +11,7 @@ The project is designed to improve skills.
 * **CSS3** 
 * **JS**
 * **jQuery**
+
+## Screenshots
+
+![Screenshot](screenshots/screenshot-1.png?raw=true "Screenshot")
