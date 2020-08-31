@@ -64,7 +64,7 @@ $(document).ready(function () {
                 }
                 // only one '0' at the beginning of the number
             } else if (number === '0') {
-                if (firstNum[0] !== '0') {
+                if (firstNum[0] !== '0' || (firstNum[0] == '0' && firstNum[1] == '.')) {
                     firstNum += number;
                     $('#action').append(number);
                 }
@@ -95,7 +95,7 @@ $(document).ready(function () {
                 }
                 // only one '0' at the beginning of the number
             } else if (number === '0') {
-                if (secondNum[0] !== '0') {
+                if (secondNum[0] !== '0' || (secondNum[0] == '0' && secondNum[1] == '.')) {
                     secondNum += number;
                     $('#action').append(number);
                 }
