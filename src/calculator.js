@@ -38,7 +38,7 @@ $(document).ready(function () {
                 }
                 break;
             case '-':
-                //we can write -1 -2 -3 as a first number
+                //we can write -1 -2 -3... as a first number
                 if (!firstNum) {
                     firstNum += '-';
                     $('#action').text(`-`);
@@ -47,6 +47,7 @@ $(document).ready(function () {
                 // we can write an action only if the first number is entered
                 if (firstNum && firstNum !== '-') {
                     action = $(this).attr('data-action');
+                    secondNum = '';
                     $('#action').text(`${firstNum}${action}`);
                 }
         }
