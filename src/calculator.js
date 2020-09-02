@@ -2,7 +2,7 @@ $(document).ready(function () {
     let firstNum = '',
         secondNum = '',
         action = '',
-        result = 0;
+        result;
 
     // after loading show '0' as a result
     $('#result').text(result);
@@ -15,26 +15,29 @@ $(document).ready(function () {
                 firstNum = '';
                 secondNum = '';
                 action = '';
+
                 $('#result').text(result);
                 $('#action').text('');
                 break;
             case 'calculate':
                 // we can calculate only when the second number is entered
                 if (secondNum) {
-                    result = calculate(+firstNum, +secondNum, action);
+                    result = calculate(+firstNum, +secondNum, action).toString();
 
                     // after receiving the result, it becomes the first number
                     firstNum = result;
 
-                    console.log(String(result).length)
-
-                    secondNum = '';
                     $('#result').text(result);
 
                     // we can add only one '='
                     if (!$('#action').text().includes('=')) {
-                        $('#action').append('=');
+                        // () when second number with -
+                        secondNum.indexOf('-') === -1 ? $('#action').append('=') : $('#action').append(')=');
                     }
+
+                    //clear second number and action
+                    secondNum = '';
+                    action = '';
                 }
                 break;
             case '-':
@@ -43,9 +46,14 @@ $(document).ready(function () {
                     firstNum += '-';
                     $('#action').text(`-`);
                 }
+                //we can write -1 -2 -3... as a second number
+                else if (firstNum && action) {
+                    secondNum += '-';
+                    $('#action').append('(-');
+                }
             default:
                 // we can write an action only if the first number is entered
-                if (firstNum && firstNum !== '-') {
+                if (firstNum && firstNum !== '-' && secondNum !== '-') {
                     action = $(this).attr('data-action');
                     secondNum = '';
                     $('#action').text(`${firstNum}${action}`);
@@ -69,26 +77,27 @@ $(document).ready(function () {
                     firstNum += number;
                     $('#action').append(number);
                 }
-                // only one '0' at the beginning of the number
-            } else if (number === '0') {
+            }
+            // only one '0' at the beginning of the number
+            else if (number === '0') {
                 if (firstNum[0] !== '0' || (firstNum[0] == '0' && firstNum[1] == '.')) {
                     firstNum += number;
                     $('#action').append(number);
                 }
-                // 01 02 03... turns to 1 2 3
-            } else if (firstNum[0] === '0' && firstNum[1] !== '.') {
+            }
+            // 01 02 03... turns to 1 2 3
+            else if (firstNum[0] === '0' && firstNum[1] !== '.') {
                 firstNum = '';
                 firstNum += number;
                 $('#action').text(number);
-            } else {
+            }
+            else {
                 firstNum += number;
                 $('#action').append(number);
             }
-
-
-
-            // check so that you can't write a number after '='
-        } else if (!$('#action').text().includes('=')) {
+        }
+        // check so that you can't write a number after '='
+        else if (!$('#action').text().includes('=')) {
             // length of the second number can not be > 10
             if (secondNum.length > 10) {
                 number = '';
@@ -100,18 +109,21 @@ $(document).ready(function () {
                     secondNum += number;
                     $('#action').append(number);
                 }
-                // only one '0' at the beginning of the number
-            } else if (number === '0') {
+            }
+            // only one '0' at the beginning of the number
+            else if (number === '0') {
                 if (secondNum[0] !== '0' || (secondNum[0] == '0' && secondNum[1] == '.')) {
                     secondNum += number;
                     $('#action').append(number);
                 }
-                // 01 02 03... turns to 1 2 3
-            } else if (secondNum[0] === '0' && secondNum[1] !== '.') {
+            }
+            // 01 02 03... turns to 1 2 3
+            else if (secondNum[0] === '0' && secondNum[1] !== '.') {
                 secondNum = '';
                 secondNum += number;
                 $('#action').text(`${firstNum}${action}${secondNum}`);
-            } else {
+            }
+            else {
                 secondNum += number;
                 $('#action').append(number);
             }
