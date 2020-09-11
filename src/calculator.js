@@ -189,17 +189,3 @@ const checkOneEqual = () => {
         secondNum.indexOf('-') === -1 ? $('#action').append('=') : $('#action').append(')=');
     }
 }
-
-// const clearFirstZero = (num, value, itIsFirstNum) => {
-//     if (num[0] === '0' && num[1] !== '.') {
-//         if (itIsFirstNum) {
-//             firstNum = '';
-//             firstNum += value;
-//         } else {
-//             secondNum = '';
-//             secondNum += value;
-//         }
-
-//         $('#action').text(`${firstNum}${action}${secondNum}`);
-//     }
-// }
