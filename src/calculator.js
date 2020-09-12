@@ -42,7 +42,7 @@ $actionBtn.on('click', function () {
                 firstNum += '-';
                 $expressionDiv.text(`-`);
                 //when division by zero clear result
-                $expressionDiv.text('0');
+                $resultDiv.text('0');
             }
             //we can write -1 -2 -3... as a second number
             else if (firstNum && action) {
