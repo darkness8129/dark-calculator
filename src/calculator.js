@@ -1,137 +1,126 @@
+//jQuery objects variables
+const $document = $(document),
+    $actionBtn = $('.action-btn'),
+    $numberBtn = $('.number-btn'),
+    $resultDiv = $('#result'),
+    $expressionDiv = $('#expression');
+
+//variables
 let firstNum = '',
     secondNum = '',
     action = '',
     result = 0;
 
-$(document).ready(function () {
+$document.ready(function () {
     // after loading show '0' as a result
-    $('#result').text(result);
+    $resultDiv.text(result);
 });
 
-$('.action-btn').on('click', function () {
-    switch ($(this).attr('data-action')) {
+$actionBtn.on('click', function () {
+    let actionValue = $(this).attr('data-action');
+
+    switch (actionValue) {
         case 'clear':
             // clear all variables
             clearVariables();
 
             // clear screen
             clearScreen();
+
             break;
         case 'calculate':
             //division by zero 
             checkDivisionByZero();
 
-            // we can calculate only when the second number is entered
-            if (secondNum) {
-                result = calculate(+firstNum, +secondNum, action).toString();
+            //get result
+            getResult();
 
-                // after receiving the result, it becomes the first number
-                firstNum = result;
-
-                $('#result').text(result);
-
-                // we can add only one '='
-                checkOneEqual();
-
-                //clear second number and action
-                secondNum = '';
-                action = '';
-            }
             break;
         case '-':
             //we can write -1 -2 -3... as a first number
             if (!firstNum) {
                 firstNum += '-';
-                $('#action').text(`-`);
+                $expressionDiv.text(`-`);
                 //when division by zero clear result
-                $('#result').text('0');
+                $expressionDiv.text('0');
             }
             //we can write -1 -2 -3... as a second number
             else if (firstNum && action) {
                 secondNum += '-';
-                $('#action').append('(-');
+                $expressionDiv.append('(-');
             }
+
+        //no break need
         default:
-            // we can write an action only if the first number is entered
-            if (firstNum && firstNum !== '-' && secondNum !== '-') {
-                action = $(this).attr('data-action');
-                secondNum = '';
-                $('#action').text(`${firstNum}${action}`);
-            }
+            //set action
+            setAction(actionValue);
     }
 })
 
-$('.number-btn').on('click', function () {
-    let number = $(this).attr('data-number');
+$numberBtn.on('click', function () {
+    let numberValue = $(this).attr('data-number');
 
     //can't write a number after '='
-    if ($('#action').text().includes('=')) {
-        clearVariables();
-        clearScreen();
-    }
+    blockWriteNumberAfterEqual();
 
     // if the action is entered, then write the first number, if not - the second
     if (!action) {
         // length of the first number can not be > 10
         if (firstNum.length > 10) {
-            number = '';
+            numberValue = '';
         }
 
         // there can be only one '.' in the first number and after first symbol
-        if (number === '.') {
+        if (numberValue === '.') {
             if (!firstNum.includes('.') && firstNum) {
-                firstNum += number;
-                $('#action').append(number);
+                setFirstNum(numberValue);
             }
         }
         // only one '0' at the beginning of the number
-        else if (number === '0') {
+        else if (numberValue === '0') {
             if (firstNum[0] !== '0' || (firstNum[0] == '0' && firstNum[1] == '.')) {
-                firstNum += number;
-                $('#action').append(number);
+                setFirstNum(numberValue);
             }
         }
         // 01 02 03... turns to 1 2 3
         else if (firstNum[0] === '0' && firstNum[1] !== '.') {
             firstNum = '';
-            firstNum += number;
-            $('#action').text(`${firstNum}${action}${secondNum}`);
+            firstNum += numberValue;
+            $expressionDiv.text(`${firstNum}${action}${secondNum}`);
         }
         else {
-            firstNum += number;
-            $('#action').append(number);
+            //set first num
+            setFirstNum(numberValue);
         }
     }
     else {
         // length of the second number can not be > 10
         if (secondNum.length > 10) {
-            number = '';
+            numberValue = '';
         }
 
         // there can be only one '.' in the second number and after first symbol
-        if (number === '.') {
+        if (numberValue === '.') {
             if (!secondNum.includes('.') && secondNum) {
-                secondNum += number;
-                $('#action').append(number);
+                setSecondNum(numberValue);
             }
         }
         // only one '0' at the beginning of the number
-        else if (number === '0') {
+        else if (numberValue === '0') {
             if (secondNum[0] !== '0' || (secondNum[0] == '0' && secondNum[1] == '.')) {
-                secondNum += number;
-                $('#action').append(number);
+                setSecondNum(numberValue);
             }
         }
         // 01 02 03... turns to 1 2 3
         else if (secondNum[0] === '0' && secondNum[1] !== '.') {
             secondNum = '';
-            secondNum += number;
+            secondNum += numberValue;
 
-            $('#action').text(`${firstNum}${action}${secondNum}`);
+            $expressionDiv.text(`${firstNum}${action}${secondNum}`);
         }
         else {
-            secondNum += number;
-            $('#action').append(number);
+            //set second num
+            setSecondNum(numberValue);
         }
     }
 })
@@ -159,6 +148,48 @@ const calculate = (firstNum, secondNum, action) => {
     return parseFloat(result.toPrecision(15));
 }
 
+// func for setting action
+const setAction = (value) => {
+    // we can write an action only if the first number is entered
+    if (firstNum && firstNum !== '-' && secondNum !== '-') {
+        action = value;
+        secondNum = '';
+        $expressionDiv.text(`${firstNum}${action}`);
+    }
+}
+
+//func for setting first num
+const setFirstNum = (value) => {
+    firstNum += value;
+    $expressionDiv.append(value);
+}
+
+//func for setting second num
+const setSecondNum = (value) => {
+    secondNum += value;
+    $expressionDiv.append(value);
+}
+
+//func for getting result
+const getResult = () => {
+    // we can calculate only when the second number is entered
+    if (secondNum) {
+        //calculating
+        result = calculate(+firstNum, +secondNum, action).toString();
+
+        // after receiving the result, it becomes the first number
+        firstNum = result;
+        $resultDiv.text(result);
+
+        // we can add only one '='
+        checkOneEqual();
+
+        //clear second number and action
+        secondNum = '';
+        action = '';
+    }
+}
+
 //func for clearing variables
 const clearVariables = () => {
     result = 0;
@@ -169,23 +200,31 @@ const clearVariables = () => {
 
 //func for clearing screen
 const clearScreen = () => {
-    $('#action').text('');
-    $('#result').text('0');
+    $expressionDiv.text('');
+    $resultDiv.text('0');
 }
 
 // func for checking division by zero 
 const checkDivisionByZero = () => {
     if (secondNum === '0' && action === '/') {
         clearVariables();
-        $('#result').text('Error!');
-        $('#action').append('=');
+        $resultDiv.text('Error!');
+        $expressionDiv.append('=');
     }
 }
 
 // func for checking that we can add only one '='
 const checkOneEqual = () => {
-    if (!$('#action').text().includes('=')) {
+    if (!$expressionDiv.text().includes('=')) {
         // () when second number with -
-        secondNum.indexOf('-') === -1 ? $('#action').append('=') : $('#action').append(')=');
+        secondNum.indexOf('-') === -1 ? $expressionDiv.append('=') : $expressionDiv.append(')=');
+    }
+}
+
+//func check that we can't write a number after '='
+const blockWriteNumberAfterEqual = () => {
+    if ($expressionDiv.text().includes('=')) {
+        clearVariables();
+        clearScreen();
     }
 }

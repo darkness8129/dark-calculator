@@ -48,7 +48,8 @@ body {
 
 /*Panels*/
 
-.output, .input {
+.output,
+.input {
     padding: 10px;
     border: 1px solid gray;
     border-radius: 20px;
@@ -75,7 +76,8 @@ body {
     font-weight: bold;
 }
 
-#action, #result {
+#expression,
+#result {
     display: block;
     text-align: right;
 }
@@ -86,7 +88,8 @@ body {
 
 /*Buttons*/
 
-.number-btn, .action-btn {
+.number-btn,
+.action-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -94,12 +97,13 @@ body {
     height: 45px;
     border-radius: 50%;
     cursor: pointer;
-    transition: .1s all linear;
+    transition: 0.1s all linear;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.number-btn:hover, .action-btn:hover {
-    opacity: .9;
+.number-btn:hover,
+.action-btn:hover {
+    opacity: 0.9;
 }
 
 .number-btn {
